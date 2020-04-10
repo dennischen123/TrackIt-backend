@@ -12,6 +12,7 @@ mongoose.connect(DB_URL, {
     .catch(err => console.log(err));
 
 module.exports = {
-    User: require('./User.js'),
-    Product: require('./Product'),
+    User: require('./User'),
+    Warranty: require('./Warranty'),
+    Additional: require('./Additional')
 }
