@@ -1,5 +1,6 @@
 module.exports = {
     users: require('./usersController'),
-    warranties: require('./warrantiesController'),
+    warranties: require('./warrantiesController.js'),
     additionals: require('./additionalsController'),
+    auth: require('./auth');
 };
