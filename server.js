@@ -2,13 +2,11 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
 
 require('dotenv').config();
 
 //Port
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 4000;
 
 //Routes
 const routes = require('./routes');
@@ -24,21 +22,13 @@ const corsOptions = {
 }
 
 //MiddleWare
+
+//CORS - Cross Origin Resource Sharing
 app.use(cors(corsOptions));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(
-    session({
-        store: new MongoStore({ url: process.env.MONGODB_URI }),
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 7 * 2 //=> 2 weeks
-        }
-    })
-)
 
 app.use('/api', routes.auth);
 app.use('/api', routes.api);
