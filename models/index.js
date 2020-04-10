@@ -13,6 +13,6 @@ mongoose.connect(DB_URL, {
 
 module.exports = {
     User: require('./User'),
-    Warranty: require('./Warranty'),
+    Warranty: require('./Warranty.js'),
     Additional: require('./Additional')
 }
