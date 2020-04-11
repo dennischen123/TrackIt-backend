@@ -12,4 +12,4 @@ const UserSchema = new Schema({
     joinDate: { type: Date, required: true, default: Date.now},
 });
 
-moodule.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);

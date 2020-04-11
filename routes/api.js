@@ -17,5 +17,4 @@ router.post('/users/:uid/additionals', verifyToken, ctrl.additionals.create);
 router.put('/users/:uid/additionals/:aid', verifyToken, ctrl.additionals.update);
 router.delete('/users/:uid/additionals/:aid', verifyToken, ctrl.additionals.destroy);
 
-
 module.exports = router;
