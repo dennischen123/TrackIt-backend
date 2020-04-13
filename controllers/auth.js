@@ -20,7 +20,7 @@ const register = (req, res) => {
             return res.status(400).json({ error: 'username exists' });
         }
         
-        bcrypt.genSale(10, (err, salt) => {
+        bcrypt.genSalt(10, (err, salt) => {
             if (err)
                 return res.status(500).json(err);
             bcrypt.hash(newUser.password, salt, (err, hashedPwd) => {
@@ -76,7 +76,7 @@ const login = (req, res) => {
                     },
                 );
                 return res.status(200).json({
-                    message: 'User Created',
+                    message: 'User Authenticated',
                     token
                 });
             } else {
