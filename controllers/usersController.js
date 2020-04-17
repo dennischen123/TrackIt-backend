@@ -3,35 +3,26 @@ const fs = require('fs');
 
 const upload = async (req, res) => {
     try {
-        let img = fs.readFileSync(req.file.path);
-        let encode_image = img.toString('base64');
-        let finalImg = {
-            contentType: req.file.mimetype,
-            path: req.file.path,
-            data: new Buffer.from(encode_image, 'base64')
-        };
-
-        const newImage = db.Image.create(finalImg);
-        if (!newImage)
-            res.status(400).json({ error: 'Image not created' });
-        res.json(req.file);
-        // res.contentType(finalImg.contentType);
-        // res.json({'base64': finalImg.data})
+        db.User.findOne({ _id: req.params.uid }, (err, foundUser) => {
+            if (err)
+                return res.status(500).json(err);
+            let img = fs.readFileSync(req.file.path);
+            let encode_image = img.toString('base64');
+            let finalImg = {
+                contentType: req.file.mimetype,
+                path: req.file.path,
+                uid: req.body.uid,
+                data: new Buffer.from(encode_image, 'base64')
+            };
+            foundUser.warranties[foundUser.warranties.length-1].image = finalImg
+            foundUser.save();
+            res.json(foundUser);
+        })
     } catch (err) {
         res.status(500).json(err);
     }
-            // console.log(res);
-
-            // if(err) return console.log(err)
-
-            // console.log("Saved to database")
-            // res.contentType(finalImg,contentType);
-            // res.json(req.file);
-            // res.send(finalImg.image);
-    //     })
-
-    // }
 }
+
 
 const index = async (req, res) => {
     try {

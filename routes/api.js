@@ -10,7 +10,7 @@ const upload = multer({dest: __dirname + '/../public/uploads', limits: {fileSize
 router.get('/users', ctrl.users.index);
 
 //Image Upload
-router.post('/upload', upload.single('photo'), ctrl.users.upload);
+router.post('/users/:uid/warranties/:wid/upload', upload.single('photo'), ctrl.users.upload);
 
 //Warranties
 router.get('/users/:uid/warranties', ctrl.warranties.index);

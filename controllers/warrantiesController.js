@@ -32,7 +32,6 @@ const create = async (req, res) => {
     db.User.findOne({_id: req.params.uid}, (err, foundUser) => {
         if (err)
             return res.status(500).json(err);
-        // console.log(foundUser)
         foundUser.warranties.push(newWarranty);
         foundUser.save();
         res.json(foundUser);
