@@ -19,6 +19,7 @@ const show = async (req, res) => {
 
 const create = async (req, res) => {
     newWarranty = {
+        name: req.body.name,
         brand: req.body.brand,
         model: req.body.model,
         purchaseDate: req.body.purchaseDate,

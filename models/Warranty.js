@@ -2,14 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const WarrantySchema = new Schema({
-    brand: String,
-    model: String,
+    name: { type: String, default: '' },
+    brand: { type: String, default: '' },
+    model: { type: String, default: '' },
     purchaseDate: Date,
-    warrantyLength: String,
+    warrantyLength: { type: String, default: '' },
     warrantyPrice: Number,
-    serialNumber: String,
-    image: String,
-    comments: String,
-});
+    serialNumber: {type: String, default: ''},
+    image: { type: String, default: '' },
+    comments: { type: String, default: '' },
+}, { retainKeyOrder: true});
 
 module.exports = mongoose.model('Warranty', WarrantySchema);

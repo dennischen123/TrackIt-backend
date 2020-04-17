@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const multer = require('multer');
+const upload = multer({ dest: __dirname + '/../public/uploads' });
+// const path = require('path');
 
 require('dotenv').config();
 
@@ -14,6 +17,19 @@ const routes = require('./routes');
 //Database
 const db = require('./models');
 
+// Create Storage engine
+// const storage = multer.diskStorage({
+//     destination: './public/uploads/',
+//     filename: ((req, file, cb) => {
+//         cb(null, file.fieldname + '-' + Date.now() + Path2D.extname(file.originalname));
+//     })
+// })
+
+// Init Upload
+// const upload = multer({
+//     storage: storage
+// }).single('myImage');
+
 const corsOptions = {
     origin: ['http://localhost:3000'],
     methods: "GET, POST, PUT, DELETE",
@@ -23,13 +39,16 @@ const corsOptions = {
 
 //MiddleWare
 
+app.use(express.static('./public'));
 //CORS - Cross Origin Resource Sharing
 app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
+// router.post('/upload', upload.single('photo'), (req, res) => {
+//     console.log("upload route")
+// });
 app.use('/api', routes.auth);
 app.use('/api', routes.api);
 

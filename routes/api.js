@@ -2,9 +2,15 @@ const express = require('express');
 const router = express.Router();
 const ctrl = require('../controllers');
 const verifyToken = require('../middleware/verification');
+const multer = require('multer');
+
+const upload = multer({dest: __dirname + '/../public/uploads', limits: {fileSize: 1000000}});
 
 //Users
 router.get('/users', ctrl.users.index);
+
+//Image Upload
+router.post('/upload', upload.single('photo'), ctrl.users.upload);
 
 //Warranties
 router.get('/users/:uid/warranties', ctrl.warranties.index);
