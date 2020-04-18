@@ -26,7 +26,7 @@ const create = async (req, res) => {
         warrantyLength: req.body.warrantyLength,
         warrantyPrice: req.body.WarrantyPrice,
         serialNum: req.body.serialNum,
-        image: req.body.image,
+        // image: req.body.image,
         comments: req.body.comments,
     }
     db.User.findOne({_id: req.params.uid}, (err, foundUser) => {
@@ -45,7 +45,9 @@ const update = async (req, res) => {
             return res.status(500).json(err)
         foundUser.warranties.forEach((warranty, index) => {
             if (warranty._id == req.params.wid) {
+                let image = foundUser.warranties[index].image;
                 foundUser.warranties[index] = {...foundUser.warranties[index], ...req.body}
+                foundUser.warranties[index].image = image;
                 foundUser.save((err, updatedWarranty) => {
                     if (err)
                         return res.status(500).json(err);
