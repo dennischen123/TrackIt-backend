@@ -25,8 +25,7 @@ const create = async (req, res) => {
         purchaseDate: req.body.purchaseDate,
         warrantyLength: req.body.warrantyLength,
         warrantyPrice: req.body.WarrantyPrice,
-        serialNum: req.body.serialNum,
-        // image: req.body.image,
+        serialNumber: req.body.serialNumber,
         comments: req.body.comments,
     }
     db.User.findOne({_id: req.params.uid}, (err, foundUser) => {
@@ -39,7 +38,6 @@ const create = async (req, res) => {
 }
 
 const update = async (req, res) => {
-    // console.log("update controller");
     db.User.findById(req.params.uid, (err, foundUser) => {
         if (err)
             return res.status(500).json(err)

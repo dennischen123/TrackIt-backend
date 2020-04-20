@@ -4,7 +4,6 @@ const Warranty = require('./Warranty');
 const Additional = require('./Additional');
 
 const ImageSchema = new Schema({
-    // img: { data: Buffer, contentType: String, path: String }
     uid: String,
     data: Buffer,
     contentType: String,
