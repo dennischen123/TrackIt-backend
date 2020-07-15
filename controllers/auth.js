@@ -9,17 +9,17 @@ const register = (req, res) => {
         password: req.body.password
     }
 
-    if(!newUser.email || !newUser.password || !newUser.name) {
+    if (!newUser.email || !newUser.password || !newUser.name) {
         return res.sendStatus(400);
     }
 
     db.User.findOne({ email: newUser.email }, (err, foundUser) => {
-        if (err){
+        if (err) {
             return res.status(500).json(err);
         } else if (foundUser) {
             return res.status(400).json({ error: 'username exists' });
         }
-        
+
         bcrypt.genSalt(10, (err, salt) => {
             if (err)
                 return res.status(500).json(err);
@@ -31,13 +31,12 @@ const register = (req, res) => {
                     if (err)
                         return res.status(500).json(err);
                     const token = jwt.sign({
-                        name: savedUser.name,
-                        _id: savedUser._id
-                    },
-                    process.env.JWT_SECRET,
-                    {
-                        expiresIn: "30 days"  
-                    },
+                            name: savedUser.name,
+                            _id: savedUser._id
+                        },
+                        process.env.JWT_SECRET, {
+                            expiresIn: "30 days"
+                        },
                     );
                     return res.status(200).json({
                         message: 'User Created',
@@ -55,23 +54,21 @@ const login = (req, res) => {
         password: req.body.password
     }
 
-    if(!user.email || !user.password)
+    if (!user.email || !user.password)
         return res.sendStatus(400);
-    db.User.findOne({email: user.email}, (err, foundUser) => {
+    db.User.findOne({ email: user.email }, (err, foundUser) => {
         if (err)
             return res.status(500).sendStatus(400);
         if (!foundUser)
             return res.sendStatus(400);
-        
+
         bcrypt.compare(user.password, foundUser.password, (err, match) => {
             if (match) {
-                const token = jwt.sign(
-                    {
+                const token = jwt.sign({
                         name: foundUser.name,
                         _id: foundUser._id
                     },
-                    process.env.JWT_SECRET,
-                    {
+                    process.env.JWT_SECRET, {
                         expiresIn: "30 days",
                     },
                 );

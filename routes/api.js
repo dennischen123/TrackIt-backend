@@ -2,28 +2,32 @@ const express = require('express');
 const router = express.Router();
 const ctrl = require('../controllers');
 const verifyToken = require('../middleware/verification');
-const multer = require('multer');
+// const multer = require('multer');
 const pdf = require('html-pdf');
 const pdfTemplate = require('../documents');
-const upload = multer({dest: __dirname + '/../public/uploads', limits: {fileSize: 1000000}});
+
+
+const upload = require('../config/multer.config');
+//Ping test
+router.get('/ping', () => console.log("pinged"));
+
+//AWS
+router.post('/upload', upload.single("file"), ctrl.aws.doUpload);
 
 //Users
 router.get('/users', ctrl.users.index);
-
-//Image Upload
-router.post('/users/:uid/warranties/:wid/upload', upload.single('photo'), ctrl.users.upload);
 
 
 //PDF routes
 router.post('/create-pdf', (req, res) => {
     console.log("create-pdf")
     pdf.create(pdfTemplate(req.body), {}).toFile(`${__dirname}/new.pdf`,
-    (err) => {
-        if(err) {
-            return console.log(err);
-        }
-    res.send(Promise.resolve())
-    })
+        (err) => {
+            if (err) {
+                return console.log(err);
+            }
+            res.send(Promise.resolve())
+        })
 })
 
 router.get('/fetch-pdf', (req, res) => {

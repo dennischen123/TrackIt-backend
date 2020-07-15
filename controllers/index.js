@@ -3,4 +3,5 @@ module.exports = {
     warranties: require('./warrantiesController.js'),
     additionals: require('./additionalsController'),
     auth: require('./auth'),
+    aws: require('./awsController'),
 };
