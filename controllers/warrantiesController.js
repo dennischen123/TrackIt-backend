@@ -1,14 +1,14 @@
 const db = require('../models');
 
-const index = async (req, res) => {
-    db.User.findById(req.params.uid, (err, foundUser)=> {
+const index = async(req, res) => {
+    db.User.findById(req.params.uid, (err, foundUser) => {
         if (err)
             return res.status(500).json(err);
         res.json(foundUser.warranties)
     })
 }
 
-const show = async (req, res) => {
+const show = async(req, res) => {
     db.User.findById(req.params.uid, (err, foundUser) => {
         if (err)
             return res.status(500).json(err);
@@ -17,7 +17,7 @@ const show = async (req, res) => {
 }
 
 
-const create = async (req, res) => {
+const create = async(req, res) => {
     newWarranty = {
         name: req.body.name,
         brand: req.body.brand,
@@ -28,7 +28,7 @@ const create = async (req, res) => {
         serialNumber: req.body.serialNumber,
         comments: req.body.comments,
     }
-    db.User.findOne({_id: req.params.uid}, (err, foundUser) => {
+    db.User.findOne({ _id: req.params.uid }, (err, foundUser) => {
         if (err)
             return res.status(500).json(err);
         foundUser.warranties.push(newWarranty);
@@ -37,14 +37,14 @@ const create = async (req, res) => {
     })
 }
 
-const update = async (req, res) => {
+const update = async(req, res) => {
     db.User.findById(req.params.uid, (err, foundUser) => {
         if (err)
             return res.status(500).json(err)
         foundUser.warranties.forEach((warranty, index) => {
             if (warranty._id == req.params.wid) {
                 let image = foundUser.warranties[index].image;
-                foundUser.warranties[index] = {...foundUser.warranties[index], ...req.body}
+                foundUser.warranties[index] = {...foundUser.warranties[index], ...req.body }
                 foundUser.warranties[index].image = image;
                 foundUser.save((err, updatedWarranty) => {
                     if (err)
@@ -56,7 +56,7 @@ const update = async (req, res) => {
     })
 }
 
-const destroy = async (req, res) => {
+const destroy = async(req, res) => {
     db.User.findById(req.params.uid, (err, foundUser) => {
         if (err)
             return res.status(500).json(err);

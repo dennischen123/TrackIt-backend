@@ -1,7 +1,7 @@
 module.exports = {
     users: require('./usersController'),
     warranties: require('./warrantiesController.js'),
-    additionals: require('./additionalsController'),
     auth: require('./auth'),
     aws: require('./awsController'),
+    pdf: require('./pdfController'),
 };

@@ -1,19 +1,17 @@
 const AWS = require('aws-sdk');
-// const stream = require('stream');
 
+const s3Client = new AWS.S3({
+    accessKeyId: process.env.IAM_USER_KEY,
+    secretAccessKey: process.env.IAM_USER_SECRET,
+    Bucket: process.env.BUCKET_NAME
+})
+
+const uploadParams = {
+    Bucket: process.env.BUCKET_NAME,
+    Key: '',
+    Body: null,
+};
 const doUpload = (req, res) => {
-    const s3Client = new AWS.S3({
-        accessKeyId: process.env.IAM_USER_KEY,
-        secretAccessKey: process.env.IAM_USER_SECRET,
-        Bucket: process.env.BUCKET_NAME
-    })
-
-    const uploadParams = {
-        Bucket: process.env.BUCKET_NAME,
-        Key: '',
-        Body: null,
-    };
-
     uploadParams.Key = req.file.originalname;
     uploadParams.Body = req.file.buffer;
 
@@ -26,5 +24,4 @@ const doUpload = (req, res) => {
 
 module.exports = {
     doUpload,
-
 }
